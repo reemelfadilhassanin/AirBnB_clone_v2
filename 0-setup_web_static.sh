@@ -1,42 +1,38 @@
 #!/usr/bin/env bash
-
-# Sets up my web servers for the deployment of web_static
+#  Bash script that sets up your web servers for the deployment of web_static
 sudo apt-get -y update
 sudo apt-get -y install nginx
 
-# Create necessary directories if they don't exist
-sudo mkdir -p /data/web_static/releases/test
-sudo mkdir -p /data/web_static/shared
-sudo chown -R ubuntu:ubuntu /data/
+mkdir -p /data/
+mkdir -p /data/web_static/
+mkdir -p /data/web_static/releases/
+mkdir -p /data/web_static/shared/
+mkdir -p /data/web_static/releases/test/
 
-# Create a fake HTML file
+touch /data/web_static/releases/test/index.html
 echo "<html>
   <head>
   </head>
   <body>
     Holberton School
   </body>
-</html>" | sudo tee /data/web_static/releases/test/index.html >/dev/null
+</html>" >> /data/web_static/releases/test/index.html
 
-# Create symbolic link
-sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
+ln -sf /data/web_static/releases/test/ /data/web_static/current
 
-# Update Nginx configuration
-nginx_config="
-server {
+chown -R ubuntu: /data/
+
+print %s "server {
 	listen 80 default_server;
 	listen [::]:80 default_server;
 	root /var/www/html;
 	server_name _;
-	add_header X-Served-By \$HOSTNAME;
+	add_header X-Served-By $HOSTNAME;
 
 	location /hbnb_static/ {
-		alias /data/web_static/current/;
+		alias /data/web_static/current/hbnb_static/;
 		index index.html;
 	}
-}"
+}" > /etc/nginx/sites-enabled/default
 
-echo "$nginx_config" | sudo tee /etc/nginx/sites-enabled/default >/dev/null
-
-# Restart Nginx
-sudo service nginx restart
+service nginx restart
