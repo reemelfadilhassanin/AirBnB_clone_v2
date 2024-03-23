@@ -7,6 +7,7 @@ import models
 from flask import Flask, render_template
 from models import storage
 from models.state import State
+from sqlalchemy.orm import scoped_session, sessionmaker
 
 app = Flask(__name__)
 
@@ -19,8 +20,8 @@ def states_list():
     """Displays HTML page of all State objects in DBStorage.
     """
     states = storage.all(State).values()
-    states_sorted = sorted(states, key=lambda state: state.name)
-    return render_template('7-states_list.html', states=states_sorted)
+    states_s = sorted(states, key=lambda st: st.name)
+    return render_template('7-states_list.html', states=states_s)
 
 
 @app.teardown_appcontext
