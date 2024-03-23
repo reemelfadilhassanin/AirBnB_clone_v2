@@ -62,7 +62,7 @@ class FileStorage:
             json.dump(my_dict, f)
 
     def reload(self):
-        """serialize the file path to JSON file path
+        """reload JSON file path
         """
         try:
             with open(self.__file_path, 'r', encoding="UTF-8") as f:
@@ -73,5 +73,5 @@ class FileStorage:
             pass
 
     def close(self):
-        """Thread specific storage"""
+        """close th session"""
         self.reload()
