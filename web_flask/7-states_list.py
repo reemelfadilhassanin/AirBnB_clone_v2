@@ -10,6 +10,9 @@ from models.state import State
 
 app = Flask(__name__)
 
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
+
 
 @app.route("/states_list", strict_slashes=False)
 def states_list():
@@ -24,7 +27,3 @@ def states_list():
 def teardown(exception):
     """close the current session"""
     storage.close()
-
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
