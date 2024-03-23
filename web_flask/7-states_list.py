@@ -3,6 +3,7 @@
 Script to starts a flask app
 """
 import os
+import models
 from flask import Flask, render_template
 from models import storage
 from models.state import State
