@@ -16,6 +16,7 @@ from models.user import User
 classes = {"Amenity": Amenity, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
 
+
 class DBStorage:
     """This class to manage database storage"""
 
@@ -32,9 +33,9 @@ class DBStorage:
         self.__engine = create_engine(
             'mysql+mysqldb://{}:{}@{}/{}'.
             format(HBNB_MYSQL_USER,
-                    HBNB_MYSQL_PWD,
-                    HBNB_MYSQL_HOST,
-                    HBNB_MYSQL_DB))
+                   HBNB_MYSQL_PWD,
+                   HBNB_MYSQL_HOST,
+                   HBNB_MYSQL_DB))
         if HBNB_ENV == 'test':
             Base.metadata.drop_all(self.__engine)
 
@@ -70,3 +71,10 @@ class DBStorage:
             bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(session_factory)
         self.__session = Session()
+
+
+def close(self):
+    """
+    close the session
+    """
+    self.__session.close()

@@ -61,3 +61,10 @@ class FileStorage:
             key_delete = obj.__class__.__name__ + '.' + obj.id
             if key_delete in self.__objects:
                 del self.__objects[key_delete]
+
+
+def close(self):
+    """
+    close the session.
+    """
+    self.reload()
