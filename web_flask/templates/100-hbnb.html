@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>HBNB</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/3-header.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/4-common.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/6-filters.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/8-places.css') }}" type="text/css">
+</head>
+
+<body>
+    <header class="header" id="show_filters">
+        <div class="articles">
+            <div class="dropdown">
+                <button class="dropbtn">States</button>
+                <div class="dropdown-content">
+                    {% for state in states %}
+                    <input type="checkbox" id="{{ state.id }}" name="{{ state.name }}">
+                    <label for="{{ state.id }}">{{ state.name }}</label><br>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn">Cities</button>
+                <div class="dropdown-content">
+                    {% for city in cities %}
+                    <input type="checkbox" id="{{ city.id }}" name="{{ city.name }}">
+                    <label for="{{ city.id }}">{{ city.name }}</label><br>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn">Amenities</button>
+                <div class="dropdown-content">
+                    {% for amenity in amenities %}
+                    <input type="checkbox" id="{{ amenity.id }}" name="{{ amenity.name }}">
+                    <label for="{{ amenity.id }}">{{ amenity.name }}</label><br>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </header>
+    <h1>Places</h1>
+    <section class="places-section">
+        {% for place in places %}
+        <article>
+            <div class="title">
+                <h2>{{ place.name }}</h2>
+                <div class="price_by_night">${{ place.price_by_night }}</div>
+            </div>
+            <div class="information">
+                <div class="max_guest">
+                    <div class="icon"></div>
+                    <br />
+                    <p>{{ place.max_guest }} Guests</p>
+                </div>
+                <div class="number_rooms">
+                    <div class="icon"></div>
+                    <br />
+                    <p>{{ place.number_rooms }} Bedrooms</p>
+                </div>
+                <div class="number_bathrooms">
+                    <div class="icon"></div>
+                    <br />
+                    <p>{{ place.number_bathrooms }} Bathroom</p>
+                </div>
+            </div>
+            <div class="description">
+                {{ place.description }}
+            </div>
+        </article>
+        {% endfor %}
+    </section>
+    <footer class="footer" id="footer">
+        <div class="articles">
+            <h2>Footer</h2>
+        </div>
+    </footer>
+</body>
+
+</html>
