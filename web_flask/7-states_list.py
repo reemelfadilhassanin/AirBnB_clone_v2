@@ -1,30 +1,26 @@
 #!/usr/bin/python3
 """
-Script to starts a flask app
+script to start Flask application
 """
-import os
-import models
-from flask import Flask, render_template
-from models import storage
-from models.state import State
-from sqlalchemy.orm import scoped_session, sessionmaker
 
+from flask import Flask, render_template
+from models import *
+from models import storage
 app = Flask(__name__)
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
 
-
-@app.route("/states_list", strict_slashes=False)
+@app.route('/states_list', strict_slashes=False)
 def states_list():
-    """Displays HTML page of all State objects in DBStorage.
-    """
-    states = storage.all(State).values()
-    states_s = sorted(states, key=lambda st: st.name)
-    return render_template('7-states_list.html', states=states_s)
+    """display a HTML page on port 5000"""
+    states = sorted(list(storage.all("State").values()), key=lambda x: x.name)
+    return render_template('7-states_list.html', states=states)
 
 
 @app.teardown_appcontext
-def teardown(exception):
-    """close the current session"""
+def teardown_db(exception):
+    """closes the session"""
     storage.close()
+
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port='5000')
